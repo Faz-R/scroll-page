@@ -1,31 +1,16 @@
 import { Box, Button, Paper, Typography } from "@mui/material";
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { IPost } from "../MainPage/interface";
+import { postApi } from "../../services/PostService";
 
 const PostPage = () => {
-  const { id } = useParams();
-  const [post, setPost] = useState({} as IPost);
-  const [loading, setLoading] = useState(false);
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (id) {
-      setLoading(true);
-      axios
-        .get(`https://jsonplaceholder.typicode.com/posts/${id}`)
-        .then((response) => {
-          setPost(response.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    }
-  }, [id]);
+  if (!id) {
+    return <Paper>Post no founded</Paper>;
+  }
+
+  const { data: post, isLoading } = postApi.useGetPostQuery(id);
 
   return (
     <Paper
@@ -37,25 +22,27 @@ const PostPage = () => {
         padding: "30px",
       }}
     >
-      {loading ? (
+      {isLoading ? (
         <Box>Loading...</Box>
       ) : (
-        <>
-          <Box sx={{ display: "flex", flexDirection: "row", gap: "20px" }}>
-            <Typography>#{id}</Typography>
-            <Typography>Title: {post.title}</Typography>
-          </Box>
-          <Box>Description: {post.body}</Box>
-          <Button
-            variant="contained"
-            sx={{ justifySelf: "center" }}
-            onClick={() => {
-              navigate(-1);
-            }}
-          >
-            Назад
-          </Button>
-        </>
+        post && (
+          <>
+            <Box sx={{ display: "flex", flexDirection: "row", gap: "20px" }}>
+              <Typography>#{id}</Typography>
+              <Typography>Title: {post.title}</Typography>
+            </Box>
+            <Box>Description: {post.body}</Box>
+            <Button
+              variant="contained"
+              sx={{ justifySelf: "center" }}
+              onClick={() => {
+                navigate(-1);
+              }}
+            >
+              Назад
+            </Button>
+          </>
+        )
       )}
     </Paper>
   );
