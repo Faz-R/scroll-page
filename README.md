@@ -1,2 +1,2 @@
-Posts page
-React, React Router Dom, MUI, TypeScript
+## Posts page ##
+Stack: React, React Router Dom, MUI, TypeScript
