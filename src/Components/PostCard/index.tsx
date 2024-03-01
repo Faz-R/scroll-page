@@ -1,8 +1,9 @@
 import { Paper, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { PostProps } from "./interface";
+import { FC } from "react";
 
-const PostCard = ({ post }: PostProps) => {
+const PostCard: FC<PostProps> = ({ post }) => {
   return (
     <Paper
       variant="elevation"
