@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Button, Container, Paper, Typography } from "@mui/material";
+import { Container } from "@mui/material";
 import axios from "axios";
 import { IPost } from "./interface";
-import { Link } from "react-router-dom";
+import PostCard from "../../Components/PostCard";
 
 function MainPage() {
   const [posts, setPosts] = useState<IPost[]>([]);
@@ -53,36 +53,7 @@ function MainPage() {
         }}
       >
         {posts.map((post, index) => {
-          return (
-            <Paper
-              variant="elevation"
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                gap: "20px",
-                alignItems: "center",
-                padding: "20px",
-              }}
-              key={index}
-            >
-              <Typography sx={{ flex: 1 }}>#{post.id}</Typography>
-              <Typography sx={{ flex: 4 }}>{post.title}</Typography>
-              <Typography
-                sx={{
-                  flex: 10,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {post.body}
-              </Typography>
-
-              <Button component={Link} to={`/${post.id}`} variant="contained">
-                Просмотр
-              </Button>
-            </Paper>
-          );
+          return <PostCard post={post} key={index} />;
         })}
       </Container>
     </>
