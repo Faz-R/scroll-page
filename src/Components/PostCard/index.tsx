@@ -14,6 +14,7 @@ const PostCard: FC<PostProps> = ({ post }) => {
         gap: "20px",
         alignItems: "center",
         padding: "20px",
+        margin: "20px",
       }}
     >
       <Typography sx={{ flex: 1, minWidth: "20px" }}>#{post.id}</Typography>
